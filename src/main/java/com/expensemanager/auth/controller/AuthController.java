@@ -2,6 +2,8 @@ package com.expensemanager.auth.controller;
 
 import com.expensemanager.auth.dto.RegisterRequest;
 import com.expensemanager.auth.dto.RegisterResponse;
+import com.expensemanager.auth.dto.LoginRequest;
+import com.expensemanager.auth.dto.LoginResponse;
 import com.expensemanager.auth.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,5 +21,10 @@ public class AuthController {
     @ResponseStatus(HttpStatus.CREATED)
     public RegisterResponse register(@Valid @RequestBody RegisterRequest request) {
         return authService.register(request);
+    }
+
+    @PostMapping("/login")
+    public LoginResponse login(@Valid @RequestBody LoginRequest request) {
+        return authService.login(request);
     }
 }
