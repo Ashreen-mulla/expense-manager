@@ -2,7 +2,6 @@ package com.expensemanager.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -14,6 +13,8 @@ public class SecurityConfig {
 
         http
                 .csrf(csrf -> csrf.disable())
+                .httpBasic(httpBasic -> httpBasic.disable())
+                .formLogin(form -> form.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/swagger-ui/**",
@@ -21,8 +22,7 @@ public class SecurityConfig {
                                 "/api/v1/auth/**"
                         ).permitAll()
                         .anyRequest().authenticated()
-                )
-                .httpBasic(Customizer.withDefaults());
+                );
 
         return http.build();
     }

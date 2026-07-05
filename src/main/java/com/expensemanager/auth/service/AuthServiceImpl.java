@@ -6,6 +6,7 @@ import com.expensemanager.auth.entity.Role;
 import com.expensemanager.auth.entity.User;
 import com.expensemanager.auth.mapper.UserMapper;
 import com.expensemanager.auth.repository.UserRepository;
+import com.expensemanager.common.exception.EmailAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,10 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public RegisterResponse register(RegisterRequest request) {
+
+        if (userRepository.existsByEmail(request.getEmail())) {
+            throw new EmailAlreadyExistsException("Email already exists");
+        }
 
         User user = new User();
 
