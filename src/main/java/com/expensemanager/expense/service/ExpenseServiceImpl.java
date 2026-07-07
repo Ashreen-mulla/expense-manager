@@ -9,6 +9,8 @@ import com.expensemanager.expense.repository.ExpenseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -45,5 +47,31 @@ public class ExpenseServiceImpl implements ExpenseService {
         response.setExpenseDate(savedExpense.getExpenseDate());
 
         return response;
+    }
+
+    @Override
+    public List<ExpenseResponse> getMyExpenses() {
+
+        String email = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getName();
+
+        User user = userRepository.findByEmail(email).orElseThrow();
+
+        return expenseRepository.findByUser(user)
+                .stream()
+                .map(expense -> {
+
+                    ExpenseResponse response = new ExpenseResponse();
+
+                    response.setId(expense.getId());
+                    response.setTitle(expense.getTitle());
+                    response.setAmount(expense.getAmount());
+                    response.setDescription(expense.getDescription());
+                    response.setExpenseDate(expense.getExpenseDate());
+
+                    return response;
+                })
+                .collect(Collectors.toList());
     }
 }
