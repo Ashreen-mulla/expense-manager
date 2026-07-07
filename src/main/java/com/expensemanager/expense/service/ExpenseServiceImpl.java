@@ -6,6 +6,7 @@ import com.expensemanager.expense.dto.CreateExpenseRequest;
 import com.expensemanager.expense.dto.ExpenseResponse;
 import com.expensemanager.expense.entity.Expense;
 import com.expensemanager.expense.repository.ExpenseRepository;
+import com.expensemanager.expense.dto.UpdateExpenseRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -73,5 +74,58 @@ public class ExpenseServiceImpl implements ExpenseService {
                     return response;
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public ExpenseResponse updateExpense(Long id, UpdateExpenseRequest request) {
+
+        String email = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getName();
+
+        User user = userRepository.findByEmail(email).orElseThrow();
+
+        Expense expense = expenseRepository.findById(id)
+                .orElseThrow();
+
+        if (!expense.getUser().getId().equals(user.getId())) {
+            throw new RuntimeException("Expense not found");
+        }
+
+        expense.setTitle(request.getTitle());
+        expense.setAmount(request.getAmount());
+        expense.setDescription(request.getDescription());
+        expense.setExpenseDate(request.getExpenseDate());
+
+        Expense updatedExpense = expenseRepository.save(expense);
+
+        ExpenseResponse response = new ExpenseResponse();
+
+        response.setId(updatedExpense.getId());
+        response.setTitle(updatedExpense.getTitle());
+        response.setAmount(updatedExpense.getAmount());
+        response.setDescription(updatedExpense.getDescription());
+        response.setExpenseDate(updatedExpense.getExpenseDate());
+
+        return response;
+    }
+
+    @Override
+    public void deleteExpense(Long id) {
+
+        String email = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getName();
+
+        User user = userRepository.findByEmail(email).orElseThrow();
+
+        Expense expense = expenseRepository.findById(id)
+                .orElseThrow();
+
+        if (!expense.getUser().getId().equals(user.getId())) {
+            throw new RuntimeException("Expense not found");
+        }
+
+        expenseRepository.delete(expense);
     }
 }
