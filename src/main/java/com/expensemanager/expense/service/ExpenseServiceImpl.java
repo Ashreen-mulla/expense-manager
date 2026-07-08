@@ -7,6 +7,8 @@ import com.expensemanager.expense.dto.ExpenseResponse;
 import com.expensemanager.expense.entity.Expense;
 import com.expensemanager.expense.repository.ExpenseRepository;
 import com.expensemanager.expense.dto.UpdateExpenseRequest;
+import com.expensemanager.category.repository.CategoryRepository;
+import com.expensemanager.category.entity.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     private final ExpenseRepository expenseRepository;
     private final UserRepository userRepository;
+    private final CategoryRepository categoryRepository;
 
     @Override
     public ExpenseResponse createExpense(CreateExpenseRequest request) {
@@ -29,6 +32,13 @@ public class ExpenseServiceImpl implements ExpenseService {
 
         User user = userRepository.findByEmail(email).orElseThrow();
 
+        Category category = categoryRepository.findById(request.getCategoryId())
+                .orElseThrow();
+
+        if (!category.getUser().getId().equals(user.getId())) {
+            throw new RuntimeException("Category not found");
+        }
+
         Expense expense = new Expense();
 
         expense.setTitle(request.getTitle());
@@ -36,6 +46,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         expense.setDescription(request.getDescription());
         expense.setExpenseDate(request.getExpenseDate());
         expense.setUser(user);
+        expense.setCategory(category);
 
         Expense savedExpense = expenseRepository.save(expense);
 
@@ -46,6 +57,8 @@ public class ExpenseServiceImpl implements ExpenseService {
         response.setAmount(savedExpense.getAmount());
         response.setDescription(savedExpense.getDescription());
         response.setExpenseDate(savedExpense.getExpenseDate());
+        response.setCategoryId(category.getId());
+        response.setCategoryName(category.getName());
 
         return response;
     }
@@ -70,6 +83,8 @@ public class ExpenseServiceImpl implements ExpenseService {
                     response.setAmount(expense.getAmount());
                     response.setDescription(expense.getDescription());
                     response.setExpenseDate(expense.getExpenseDate());
+                    response.setCategoryId(expense.getCategory().getId());
+                    response.setCategoryName(expense.getCategory().getName());
 
                     return response;
                 })
@@ -85,6 +100,13 @@ public class ExpenseServiceImpl implements ExpenseService {
 
         User user = userRepository.findByEmail(email).orElseThrow();
 
+        Category category = categoryRepository.findById(request.getCategoryId())
+                .orElseThrow();
+
+        if (!category.getUser().getId().equals(user.getId())) {
+            throw new RuntimeException("Category not found");
+        }
+
         Expense expense = expenseRepository.findById(id)
                 .orElseThrow();
 
@@ -96,6 +118,7 @@ public class ExpenseServiceImpl implements ExpenseService {
         expense.setAmount(request.getAmount());
         expense.setDescription(request.getDescription());
         expense.setExpenseDate(request.getExpenseDate());
+        expense.setCategory(category);
 
         Expense updatedExpense = expenseRepository.save(expense);
 
@@ -106,6 +129,8 @@ public class ExpenseServiceImpl implements ExpenseService {
         response.setAmount(updatedExpense.getAmount());
         response.setDescription(updatedExpense.getDescription());
         response.setExpenseDate(updatedExpense.getExpenseDate());
+        response.setCategoryId(updatedExpense.getCategory().getId());
+        response.setCategoryName(updatedExpense.getCategory().getName());
 
         return response;
     }

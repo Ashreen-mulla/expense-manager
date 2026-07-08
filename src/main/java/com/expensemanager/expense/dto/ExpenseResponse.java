@@ -13,4 +13,8 @@ public class ExpenseResponse {
     private BigDecimal amount;
     private String description;
     private LocalDate expenseDate;
+
+    private Long categoryId;
+
+    private String categoryName;
 }

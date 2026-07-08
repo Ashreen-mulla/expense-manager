@@ -22,4 +22,7 @@ public class UpdateExpenseRequest {
 
     @NotNull
     private LocalDate expenseDate;
+
+    @NotNull
+    private Long categoryId;
 }

@@ -2,6 +2,7 @@ package com.expensemanager.expense.entity;
 
 import com.expensemanager.auth.entity.User;
 import com.expensemanager.common.entity.BaseEntity;
+import com.expensemanager.category.entity.Category;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,4 +30,8 @@ public class Expense extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
 }
