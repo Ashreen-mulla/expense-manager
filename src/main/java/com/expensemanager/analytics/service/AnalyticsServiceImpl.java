@@ -9,6 +9,8 @@ import com.expensemanager.expense.repository.ExpenseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import com.expensemanager.analytics.dto.CategorySpendingResponse;
+import java.util.List;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -58,5 +60,18 @@ public class AnalyticsServiceImpl implements AnalyticsService {
         response.setExpenseCount(expenseRepository.countByUser(user));
 
         return response;
+    }
+
+    @Override
+    public List<CategorySpendingResponse> getCategorySpending() {
+
+        String email = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getName();
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow();
+
+        return expenseRepository.getCategorySpending(user);
     }
 }

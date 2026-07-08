@@ -5,6 +5,7 @@ import com.expensemanager.expense.entity.Expense;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import com.expensemanager.analytics.dto.CategorySpendingResponse;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -24,6 +25,21 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
             @Param("user") User user,
             @Param("startDate") LocalDate startDate,
             @Param("endDate") LocalDate endDate
+    );
+
+    @Query("""
+       SELECT new com.expensemanager.analytics.dto.CategorySpendingResponse(
+            c.name,
+            SUM(e.amount)
+       )
+       FROM Expense e
+       JOIN e.category c
+       WHERE e.user = :user
+       GROUP BY c.name
+       ORDER BY SUM(e.amount) DESC
+       """)
+    List<CategorySpendingResponse> getCategorySpending(
+            @Param("user") User user
     );
 
     long countByUser(User user);

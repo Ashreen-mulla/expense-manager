@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.expensemanager.analytics.dto.CategorySpendingResponse;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/analytics")
@@ -17,5 +19,10 @@ public class AnalyticsController {
     @GetMapping("/dashboard")
     public DashboardResponse getDashboard() {
         return analyticsService.getDashboard();
+    }
+
+    @GetMapping("/category-spending")
+    public List<CategorySpendingResponse> getCategorySpending() {
+        return analyticsService.getCategorySpending();
     }
 }
