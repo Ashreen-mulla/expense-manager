@@ -11,10 +11,15 @@ import com.expensemanager.analytics.dto.MonthlySpendingResponse;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
 
     List<Expense> findByUser(User user);
+
+    List<Expense> findTop5ByUserOrderByExpenseDateDescIdDesc(User user);
+
+    Optional<Expense> findTopByUserOrderByAmountDesc(User user);
 
     @Query("""
             SELECT COALESCE(SUM(e.amount), 0)

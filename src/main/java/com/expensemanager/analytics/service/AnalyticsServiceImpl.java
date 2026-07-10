@@ -11,6 +11,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import com.expensemanager.analytics.dto.CategorySpendingResponse;
 import com.expensemanager.analytics.dto.MonthlySpendingResponse;
+import com.expensemanager.expense.dto.ExpenseResponse;
+import com.expensemanager.expense.entity.Expense;
+import java.util.stream.Collectors;
 
 import java.util.List;
 
@@ -61,6 +64,22 @@ public class AnalyticsServiceImpl implements AnalyticsService {
         response.setRemainingBudget(totalBudget.subtract(totalSpent));
         response.setExpenseCount(expenseRepository.countByUser(user));
 
+        BigDecimal percentage = BigDecimal.ZERO;
+
+        if (totalBudget.compareTo(BigDecimal.ZERO) > 0) {
+
+            percentage = totalSpent
+                    .multiply(BigDecimal.valueOf(100))
+                    .divide(
+                            totalBudget,
+                            2,
+                            java.math.RoundingMode.HALF_UP
+                    );
+        }
+
+        response.setBudgetUsagePercentage(percentage);
+        response.setOverBudget(totalSpent.compareTo(totalBudget) > 0);
+
         return response;
     }
 
@@ -88,5 +107,63 @@ public class AnalyticsServiceImpl implements AnalyticsService {
                 .orElseThrow();
 
         return expenseRepository.getMonthlySpending(user);
+    }
+
+    @Override
+    public List<ExpenseResponse> getRecentExpenses() {
+
+        String email = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getName();
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow();
+
+        return expenseRepository
+                .findTop5ByUserOrderByExpenseDateDescIdDesc(user)
+                .stream()
+                .map(expense -> {
+
+                    ExpenseResponse response = new ExpenseResponse();
+
+                    response.setId(expense.getId());
+                    response.setTitle(expense.getTitle());
+                    response.setAmount(expense.getAmount());
+                    response.setDescription(expense.getDescription());
+                    response.setExpenseDate(expense.getExpenseDate());
+                    response.setCategoryId(expense.getCategory().getId());
+                    response.setCategoryName(expense.getCategory().getName());
+
+                    return response;
+
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public ExpenseResponse getBiggestExpense() {
+
+        String email = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getName();
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow();
+
+        Expense expense = expenseRepository
+                .findTopByUserOrderByAmountDesc(user)
+                .orElseThrow();
+
+        ExpenseResponse response = new ExpenseResponse();
+
+        response.setId(expense.getId());
+        response.setTitle(expense.getTitle());
+        response.setAmount(expense.getAmount());
+        response.setDescription(expense.getDescription());
+        response.setExpenseDate(expense.getExpenseDate());
+        response.setCategoryId(expense.getCategory().getId());
+        response.setCategoryName(expense.getCategory().getName());
+
+        return response;
     }
 }

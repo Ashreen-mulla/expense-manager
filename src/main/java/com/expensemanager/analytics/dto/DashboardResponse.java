@@ -14,4 +14,8 @@ public class DashboardResponse {
     private BigDecimal remainingBudget;
 
     private Long expenseCount;
+
+    private BigDecimal budgetUsagePercentage;
+
+    private Boolean overBudget;
 }

@@ -2,6 +2,7 @@ package com.expensemanager.analytics.controller;
 
 import com.expensemanager.analytics.dto.DashboardResponse;
 import com.expensemanager.analytics.service.AnalyticsService;
+import com.expensemanager.expense.dto.ExpenseResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,5 +31,15 @@ public class AnalyticsController {
     @GetMapping("/monthly-spending")
     public List<MonthlySpendingResponse> getMonthlySpending() {
         return analyticsService.getMonthlySpending();
+    }
+
+    @GetMapping("/recent-expenses")
+    public List<ExpenseResponse> getRecentExpenses() {
+        return analyticsService.getRecentExpenses();
+    }
+
+    @GetMapping("/biggest-expense")
+    public ExpenseResponse getBiggestExpense() {
+        return analyticsService.getBiggestExpense();
     }
 }
