@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import com.expensemanager.analytics.dto.CategorySpendingResponse;
+import com.expensemanager.analytics.dto.MonthlySpendingResponse;
+
 import java.util.List;
 
 import java.math.BigDecimal;
@@ -73,5 +75,18 @@ public class AnalyticsServiceImpl implements AnalyticsService {
                 .orElseThrow();
 
         return expenseRepository.getCategorySpending(user);
+    }
+
+    @Override
+    public List<MonthlySpendingResponse> getMonthlySpending() {
+
+        String email = SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getName();
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow();
+
+        return expenseRepository.getMonthlySpending(user);
     }
 }
