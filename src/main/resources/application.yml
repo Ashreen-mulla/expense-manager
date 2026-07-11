@@ -1,14 +1,16 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5433/expense_manager_db
-    username: postgres
-    password: postgres
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
   jpa:
     hibernate:
       ddl-auto: validate
+
     show-sql: true
+
     properties:
       hibernate:
         format_sql: true
@@ -17,5 +19,5 @@ spring:
     enabled: true
 
 jwt:
-  secret: 7b2d4f6c8a1e3d5f9a2b4c6d8e0f1a3b5c7d9e1f3a5b7c9d1e3f5a7b9c1d3e5f
+  secret: ${JWT_SECRET}
   expiration: 86400000
