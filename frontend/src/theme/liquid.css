@@ -1,0 +1,84 @@
+:root{
+
+    --glass-bg:rgba(255,255,255,.10);
+
+    --glass-border:rgba(255,255,255,.28);
+
+    --glass-highlight:rgba(255,255,255,.55);
+
+    --glass-shadow:
+            0 10px 40px rgba(15,23,42,.10),
+            0 30px 80px rgba(15,23,42,.12);
+
+}
+
+.liquid{
+
+    position:relative;
+
+    overflow:hidden;
+
+    border-radius:32px;
+
+    background:var(--glass-bg);
+
+    backdrop-filter:blur(28px) saturate(180%);
+
+    -webkit-backdrop-filter:blur(28px) saturate(180%);
+
+    border:1px solid var(--glass-border);
+
+    box-shadow:var(--glass-shadow);
+
+}
+
+.liquid::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+            linear-gradient(
+                    180deg,
+                    rgba(255,255,255,.55),
+                    rgba(255,255,255,.10) 35%,
+                    transparent 75%
+            );
+
+    pointer-events:none;
+
+}
+
+.liquid::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:-30%;
+
+    top:-35%;
+
+    width:180%;
+
+    height:60%;
+
+    background:
+
+            radial-gradient(
+                    ellipse,
+                    rgba(255,255,255,.45),
+                    transparent 70%
+            );
+
+    filter:blur(18px);
+
+    transform:rotate(-10deg);
+
+    pointer-events:none;
+
+}
