@@ -19,10 +19,10 @@ public class CorsConfig {
 
         config.setAllowCredentials(true);
 
-        config.setAllowedOrigins(List.of(
+        config.setAllowedOriginPatterns(List.of(
                 "http://localhost:5173",
                 "http://localhost:5174",
-                "https://expense-manager-nus6klog9-ashreen-mullas-projects.vercel.app"
+                "https://*.vercel.app"
         ));
 
         config.setAllowedHeaders(List.of("*"));
