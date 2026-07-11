@@ -18,7 +18,7 @@ export default function StatCard({
                 bg-white/25
                 backdrop-blur-xl
                 shadow-xl
-                p-6
+                p-5
             "
         >
             <div className="flex justify-between items-center mb-5">
