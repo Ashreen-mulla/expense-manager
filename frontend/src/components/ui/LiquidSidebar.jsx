@@ -8,7 +8,7 @@ import {
     LogOut
 } from "lucide-react";
 
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const items = [
@@ -22,6 +22,12 @@ const items = [
 export default function LiquidSidebar() {
     const canvasRef = useRef(null);
     const asideRef  = useRef(null);
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        navigate("/login", { replace: true });
+    };
 
     /* ── mouse-reactive specular on the sidebar shell ── */
     useEffect(() => {
@@ -342,14 +348,14 @@ export default function LiquidSidebar() {
 
                     {/* Logout */}
                     <motion.button
+                        onClick={handleLogout}
                         whileHover={{ scale: 1.08 }}
                         whileTap={{ scale: 0.95 }}
                         className="
-                            relative h-14 w-14 rounded-2xl
-                            flex items-center justify-center
-                            text-red-500 hover:bg-red-500/10
-                            transition-all duration-300
-                        "
+                        relative h-14 w-14 rounded-2xl
+                        flex items-center justify-center
+                        text-red-500 hover:bg-red-500/10
+                        transition-all duration-300"
                     >
                         <LogOut size={24} strokeWidth={2.2}/>
                     </motion.button>
