@@ -25,7 +25,7 @@ export default function StatCard({
                 bg-white/15
                 backdrop-blur-[30px]
                 shadow-[0_20px_60px_rgba(15,23,42,.12)]
-                p-6
+                p-5
             "
         >
             {/* Top highlight */}
