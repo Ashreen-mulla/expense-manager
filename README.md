@@ -1,167 +1,262 @@
-# Expense Manager API
+# 💰 Expense Manager
 
-A RESTful Expense Manager backend built with Spring Boot that enables users to securely manage expenses, categories, budgets, and spending analytics using JWT authentication.
+A modern **full-stack Expense Manager** built with **Spring Boot** and **React** to help users manage expenses, budgets, categories, and financial analytics through a clean and intuitive interface.
 
 ---
 
-## Features
+## ✨ Features
+
+### 🔐 Authentication
 
 - User Registration
-- User Login with JWT Authentication
-- Expense Management (CRUD)
-- Category Management (CRUD)
-- Budget Management (CRUD)
-- Dashboard Analytics
-- Monthly Spending Analytics
-- Category-wise Spending Analytics
-- Recent Expenses
+- User Login
+- JWT Authentication
+- Protected Routes
+- Secure Logout
+
+### 📊 Dashboard
+
+- Total Budget
+- Total Spent
+- Remaining Budget
+- Expense Count
+
+### 💸 Expense Management
+
+- View Expenses
+- Add Expenses
+- Edit Expenses
+- Delete Expenses
+
+### 🗂️ Category Management
+
+- View Categories
+- Create Categories
+- Edit Categories
+- Delete Categories
+
+### 💵 Budget Management
+
+- View Budgets
+- Create Monthly Budgets
+- Update Budgets
+- Delete Budgets
+
+### 📈 Analytics
+
+- Dashboard Summary
+- Monthly Spending Trends
+- Category-wise Spending Distribution
 - Biggest Expense
-- Flyway Database Migrations
-- Swagger API Documentation
+- Recent Expenses
 
 ---
 
-## Tech Stack
+# 🛠️ Tech Stack
+
+## Backend
 
 - Java 21
 - Spring Boot 3
 - Spring Security
-- Spring Data JPA
+- JWT Authentication
+- Spring Data JPA (Hibernate)
 - PostgreSQL
 - Flyway
-- Docker Compose
 - Maven
-- Lombok
 - Swagger / OpenAPI
 
+## Frontend
+
+- React (Vite)
+- React Router
+- Axios
+- Tailwind CSS
+- Framer Motion
+- Recharts
+- Lucide React
+
 ---
 
-## Project Structure
+# 🏗️ Architecture
 
 ```
-src/main/java/com/expensemanager
-
-├── analytics
-├── auth
-├── budget
-├── category
-├── common
-├── config
-├── expense
-└── security
+React (Vite)
+      │
+      ▼
+ Axios + JWT
+      │
+      ▼
+Spring Boot REST API
+      │
+      ▼
+Spring Security
+      │
+      ▼
+ PostgreSQL
 ```
 
 ---
 
-## API Modules
+# 📂 Project Structure
 
-### Authentication
+```
+expense-manager/
 
-| Method | Endpoint |
-|---------|----------|
-| POST | /api/v1/auth/register |
-| POST | /api/v1/auth/login |
-
----
-
-### User
-
-| Method | Endpoint |
-|---------|----------|
-| GET | /api/v1/me |
-
----
-
-### Expenses
-
-| Method | Endpoint |
-|---------|----------|
-| GET | /api/v1/expenses |
-| POST | /api/v1/expenses |
-| PUT | /api/v1/expenses/{id} |
-| DELETE | /api/v1/expenses/{id} |
+├── backend/
+│   ├── src/
+│   ├── pom.xml
+│   └── ...
+│
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   ├── package.json
+│   └── ...
+│
+├── docker-compose.yml
+└── README.md
+```
 
 ---
 
-### Categories
-
-| Method | Endpoint |
-|---------|----------|
-| GET | /api/v1/categories |
-| POST | /api/v1/categories |
-| PUT | /api/v1/categories/{id} |
-| DELETE | /api/v1/categories/{id} |
-
----
-
-### Budgets
-
-| Method | Endpoint |
-|---------|----------|
-| GET | /api/v1/budgets |
-| POST | /api/v1/budgets |
-| PUT | /api/v1/budgets/{id} |
-| DELETE | /api/v1/budgets/{id} |
-
----
-
-### Analytics
-
-| Method | Endpoint |
-|---------|----------|
-| GET | /api/v1/analytics/dashboard |
-| GET | /api/v1/analytics/category-spending |
-| GET | /api/v1/analytics/monthly-spending |
-| GET | /api/v1/analytics/recent-expenses |
-| GET | /api/v1/analytics/biggest-expense |
-
----
-
-## Database
-
-- PostgreSQL
-- Managed using Flyway migrations
-- Runs through Docker Compose
-
----
+# 📡 REST API
 
 ## Authentication
 
-The API uses JWT authentication.
-
-After login:
-
-```
-Authorization: Bearer <jwt-token>
-```
-
-must be included in all protected requests.
+| Method | Endpoint |
+|---------|----------|
+| POST | `/api/v1/auth/register` |
+| POST | `/api/v1/auth/login` |
 
 ---
 
-## Running the Project
+## User
 
-### Clone
+| Method | Endpoint |
+|---------|----------|
+| GET | `/api/v1/me` |
+
+---
+
+## Expenses
+
+| Method | Endpoint |
+|---------|----------|
+| GET | `/api/v1/expenses` |
+| POST | `/api/v1/expenses` |
+| PUT | `/api/v1/expenses/{id}` |
+| DELETE | `/api/v1/expenses/{id}` |
+
+---
+
+## Categories
+
+| Method | Endpoint |
+|---------|----------|
+| GET | `/api/v1/categories` |
+| POST | `/api/v1/categories` |
+| PUT | `/api/v1/categories/{id}` |
+| DELETE | `/api/v1/categories/{id}` |
+
+---
+
+## Budgets
+
+| Method | Endpoint |
+|---------|----------|
+| GET | `/api/v1/budgets` |
+| POST | `/api/v1/budgets` |
+| PUT | `/api/v1/budgets/{id}` |
+| DELETE | `/api/v1/budgets/{id}` |
+
+---
+
+## Analytics
+
+| Method | Endpoint |
+|---------|----------|
+| GET | `/api/v1/analytics/dashboard` |
+| GET | `/api/v1/analytics/monthly-spending` |
+| GET | `/api/v1/analytics/category-spending` |
+| GET | `/api/v1/analytics/recent-expenses` |
+| GET | `/api/v1/analytics/biggest-expense` |
+
+---
+
+# 🗄️ Database
+
+- PostgreSQL
+- Flyway Database Migrations
+- Docker Compose Support
+
+---
+
+# 🔑 Authentication
+
+The API uses **JWT Authentication**.
+
+After a successful login, include the token in every protected request:
+
+```http
+Authorization: Bearer <jwt-token>
+```
+
+---
+
+# 🚀 Getting Started
+
+## Clone Repository
 
 ```bash
 git clone https://github.com/Ashreen-mulla/expense-manager.git
+cd expense-manager
 ```
 
-### Start PostgreSQL
+---
+
+## Start PostgreSQL
 
 ```bash
 docker compose up -d
 ```
 
-### Run Application
+---
+
+## Run Backend
 
 ```bash
+cd backend
 ./mvnw spring-boot:run
+```
+
+Backend runs at:
+
+```
+http://localhost:8080
 ```
 
 ---
 
-## Swagger Documentation
+## Run Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Frontend runs at:
+
+```
+http://localhost:5173
+```
+
+---
+
+# 📖 API Documentation
+
+Swagger UI:
 
 ```
 http://localhost:8080/swagger-ui/index.html
@@ -169,14 +264,74 @@ http://localhost:8080/swagger-ui/index.html
 
 ---
 
-## Build
+# 📦 Build
+
+### Backend
 
 ```bash
 ./mvnw clean package
 ```
 
+### Frontend
+
+```bash
+npm run build
+```
+
 ---
 
-## Author
+# 📸 Screenshots
 
-Ashreen Mulla
+> Add screenshots after deployment.
+
+- Login
+- Register
+- Dashboard
+- Expenses
+- Categories
+- Budgets
+- Analytics
+
+---
+
+# 🔮 Future Improvements
+
+- Profile Management
+- Toast Notifications
+- Export Expenses (CSV / PDF)
+- Dark Mode
+- Mobile App
+
+---
+
+## 📸 Screenshots
+
+### Login
+
+![Login](screenshots/login.png)
+
+### Register
+
+![Login](screenshots/register.png)
+
+### Dashboard
+
+![Dashboard](screenshots/dashboard.png)
+
+### Expenses
+
+![Expenses](screenshots/expenses.png)
+
+### Categories
+
+![Login](screenshots/categories.png)
+
+### Budgets
+
+![Login](screenshots/budgets.png)
+
+# 👨‍💻 Author
+
+**Ashreen Mulla**
+
+GitHub: https://github.com/Ashreen-mulla

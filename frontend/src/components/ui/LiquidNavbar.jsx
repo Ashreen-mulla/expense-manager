@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import {
-    Bell,
-    Search,
     UserCircle2,
 } from "lucide-react";
 import { motion } from "framer-motion";
@@ -162,88 +160,9 @@ export default function LiquidNavbar() {
                         gap-5
                     "
                 >
-                    <div
-                        className="
-                            flex
-                            items-center
-                            gap-3
 
-                            rounded-2xl
 
-                            px-4
-                            py-3
 
-                            bg-white/25
-
-                            border
-                            border-white/20
-
-                            backdrop-blur-xl
-                        "
-                    >
-
-                        <Search
-                            size={18}
-                            className="text-slate-500"
-                        />
-
-                        <input
-                            type="text"
-                            placeholder="Search..."
-
-                            className="
-                                bg-transparent
-
-                                outline-none
-
-                                placeholder:text-slate-500
-
-                                text-sm
-
-                                w-52
-                            "
-                        />
-
-                    </div>
-
-                    <motion.button
-
-                        whileHover={{
-                            scale: 1.08
-                        }}
-
-                        whileTap={{
-                            scale: .95
-                        }}
-
-                        className="
-                            relative
-
-                            h-12
-                            w-12
-
-                            rounded-2xl
-
-                            flex
-                            items-center
-                            justify-center
-
-                            bg-white/20
-
-                            border
-                            border-white/20
-
-                            backdrop-blur-xl
-                        "
-
-                    >
-
-                        <Bell
-                            size={20}
-                            className="text-slate-700"
-                        />
-
-                    </motion.button>
 
                     <motion.div
 
