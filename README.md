@@ -4,6 +4,13 @@ A modern **full-stack Expense Manager** built with **Spring Boot** and **React**
 
 ---
 
+## 🚀 Live Demo
+
+**[Open the deployed application](https://expense-manager-qz6b7g81p-ashreen-mullas-projects.vercel.app/)**
+
+The deployed application supports user registration, authentication, protected routes, and the core expense, category, budget, and analytics workflows.
+
+
 ## ✨ Features
 
 ### 🔐 Authentication
@@ -298,7 +305,7 @@ npm run build
 
 ### Register
 
-![Login](screenshots/register.png)
+![Register](screenshots/register.png)
 
 ### Dashboard
 
@@ -310,11 +317,11 @@ npm run build
 
 ### Categories
 
-![Login](screenshots/categories.png)
+![Categories](screenshots/categories.png)
 
 ### Budgets
 
-![Login](screenshots/budgets.png)
+![Budgets](screenshots/budgets.png)
 
 # 👨‍💻 Author
 
