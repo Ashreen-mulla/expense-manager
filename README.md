@@ -280,19 +280,7 @@ npm run build
 
 ---
 
-# 📸 Screenshots
 
-> Add screenshots after deployment.
-
-- Login
-- Register
-- Dashboard
-- Expenses
-- Categories
-- Budgets
-- Analytics
-
----
 
 # 🔮 Future Improvements
 
